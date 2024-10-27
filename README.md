@@ -1,5 +1,6 @@
 # UF-AI-Days-Hackathon
-UF/IBM AI Days Hackathon from 25 Oct to 26 Oct 2024
+InsureSight is a convenient tool that helps users quickly assess the value of their items and streamline the process of filing insurance claims. Simply take a picture of your items, and the program will calculate their total cost and generate a report ready for submission to your insurance provider.
+
 ## Setup
 
 1. Clone the repository
