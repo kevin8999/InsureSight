@@ -1,9 +1,31 @@
 # UF-AI-Days-Hackathon
 UF/IBM AI Days Hackathon from 25 Oct to 26 Oct 2024
-## Setup guide
+## Setup
+
 1. Clone the repository
-2. This project requires [NodeJS](https://nodejs.org/en/)
-3. open a terminal at hackathon_thing
-4. run npm install to install dependencies
-5. use npm run start with your phone on the same network
-6. scan the qr code with expo go installed on your phone to open the app
+
+```bash
+git clone https://github.com/kevin8999/UF-AI-Days-Hackathon/
+```
+
+2. Change into the project folder
+
+```bash
+cd UF-AI-Days-Hackathon
+```
+
+2. Install the project dependencies.
+
+```bash
+pip install requirements.txt -r
+cd hackathon_thing
+npm install
+```
+
+3. Run the server.
+
+```bash
+npm run start
+```
+
+4. Scan the QR code with your phone to launch the app on your phone.
