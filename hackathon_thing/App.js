@@ -1,4 +1,3 @@
-
 import { createContext, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -35,7 +34,6 @@ export default function App() {
       >
         <Tab.Screen name="CameraScreen" component={CameraScreen} initialParams={{albumName : AlbumName}} options={{title : "Camera Screen"}}/>
         <Tab.Screen name="CurrentClaim" component={CurrentClaimScreen} initialParams={{albumName : AlbumName}}  options={{title : "Current Claim"}}/>
-        
       </Tab.Navigator>
     </NavigationContainer>
   );

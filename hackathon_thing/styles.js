@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
   horScrollView: {
     flexDirection: 'row',
   },
+  verScrollView : {
+    flexDirection : 'column',
+  },
   image: {
     width: 200,
     height : "auto",
