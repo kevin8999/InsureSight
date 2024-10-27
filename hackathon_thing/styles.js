@@ -20,6 +20,29 @@ const styles = StyleSheet.create({
     justifyContent : 'center',
     alignItems : 'center'
   },
+  horScrollView: {
+    flexDirection: 'row',
+  },
+  image: {
+    width: 200,
+    height : "auto",
+    marginHorizontal: 10,
+    borderRadius: 10,
+  },
+  titleText : {
+    fontSize : 20,
+    fontWeight : 'bold',
+    margin : 15,
+    marginBottom : 0
+  },
+  chatBotText : {
+    fontSize : 20,
+    fontWeight : 'bold',
+    margin : 15,
+    marginBottom : 0,
+    alignItems : 'left',
+    justifyContent : 'left'
+  }
 });
 
 export default styles;

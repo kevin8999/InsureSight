@@ -1,14 +1,84 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import * as MediaLibrary from 'expo-media-library';
 import styles from '../styles';
 
-export default function CurrentClaimScreen() {
+function AlbumPhotos({ album }) {
+  const [assets, setAssets] = useState([]);
+
+  useEffect(() => {
+    const fetchAssets = async () => {
+      if (album) {
+        const assetsResult = await MediaLibrary.getAssetsAsync({
+          album: album.id,
+          first: 100, // Adjust the number as needed
+          mediaType: 'photo',
+        });
+
+        const assetInfos = await Promise.all(
+          assetsResult.assets.map(asset => MediaLibrary.getAssetInfoAsync(asset.id))
+        );
+
+        setAssets(assetInfos.map(info => info.localUri));
+      }
+    };
+
+    fetchAssets();
+  }, [album]);
+
   return (
-    <View style={styles.container}>
-      <Text>Current Claims screen</Text>
-      <StatusBar style="auto" />
+    <View key={album.id} style={styles.container}>
+      <Text style = {styles.titleText}>
+        {album.title} : {album.assetCount ?? 'no'} entries
+      </Text>
+      <ScrollView horizontal={true} style={styles.horScrollView}>
+        {assets && assets.map((uri, index) => (
+          <Image key={index} source={{ uri }} style={styles.image} />
+        ))}
+      </ScrollView>
     </View>
   );
 }
+
+function ChatbotText() {
+  return (
+    <View style={styles.container}>
+      <Text>gobeldygook</Text>
+      <Text>gobeldygook</Text>
+      <Text>gobeldygook</Text>
+      <Text>gobeldygook</Text>
+      
+    </View>
+  );
+}
+
+export default function CurrentClaimScreen({ route, navigation }) {
+  const albumName = route.params.albumName;
+  const [album, setAlbum] = useState(null);
+  const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
+
+  useEffect(() => {
+    const getAlbum = async () => {
+      if (!permissionResponse || permissionResponse.status !== 'granted') {
+        const response = await requestPermission();
+        if (response.status !== 'granted') {
+          return;
+        }
+      }
+      const fetchedAlbum = await MediaLibrary.getAlbumAsync(albumName);
+      setAlbum(fetchedAlbum);
+    };
+
+    getAlbum();
+  }, [albumName, permissionResponse]);
+
+  return (
+    <View style={styles.container}>
+      {album ? <AlbumPhotos album={album} /> : <Text>Loading Claim Photos...</Text>}
+      <ScrollView style={styles.horScrollView}>
+        <ChatbotText />
+      </ScrollView>
+    </View>
+  );
+}
+

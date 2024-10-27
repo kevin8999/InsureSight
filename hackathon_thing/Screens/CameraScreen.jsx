@@ -1,20 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import styles from '../styles';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import React, { useRef, useState } from 'react';
 import * as MediaLibrary from 'expo-media-library';
 
-const Stack = createNativeStackNavigator();
-
-export default function CameraScreen() {
+export default function CameraScreen({route, navigation}) {
+  const albumName = route.params.albumName;
+  
   const [permission, requestPermission] = useCameraPermissions();
   const [photo, setPhoto] = useState(null);
   const [albums, setAlbums] = useState(null);
   const [permissionResponse, requestMediaLibraryPermission] = MediaLibrary.usePermissions();
-  const AlbumName = "Insurance Claim Photos";
+
 
   const cameraRef = useRef(null);
 
@@ -52,11 +50,11 @@ export default function CameraScreen() {
         const { uri } = await cameraRef.current.takePictureAsync(options);
         const asset = await MediaLibrary.createAssetAsync(uri);
   
-        let album = await MediaLibrary.getAlbumAsync(AlbumName);  // Await here
+        let album = await MediaLibrary.getAlbumAsync(albumName);  // Await here
   
         if (!album) {
           console.log('Album not found, creating album');
-          album = await MediaLibrary.createAlbumAsync(AlbumName, asset, false); // Await and pass asset initially
+          album = await MediaLibrary.createAlbumAsync(albumName, asset, false); // Await and pass asset initially
         } else {
           await MediaLibrary.addAssetsToAlbumAsync([asset], album.id, false); // Add to album correctly
         }

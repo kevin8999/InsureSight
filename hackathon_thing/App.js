@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View } from 'react-native';
+import { createContext, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import styles from './styles';
@@ -9,6 +9,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import PastClaimsScreen from './Screens/CurrentClaimScreen';
 
 const Tab = createBottomTabNavigator();
+const AlbumName = 'Insurance Claim Photos';
 
 export default function App() {
   return (
@@ -32,9 +33,9 @@ export default function App() {
           tabBarInactiveTintColor: 'gray',
         })}
       >
-        <Tab.Screen name="CameraScreen" component={CameraScreen} options={{title : "Camera Screen"}}/>
-        <Tab.Screen name="CurrentClaim" component={CurrentClaimScreen} options={{title : "Current Claim"}}/>
-        <Tab.Screen name="PastClaims" component={PastClaimsScreen} options={{title : "Past Claims"}}/>
+        <Tab.Screen name="CameraScreen" component={CameraScreen} initialParams={{albumName : AlbumName}} options={{title : "Camera Screen"}}/>
+        <Tab.Screen name="CurrentClaim" component={CurrentClaimScreen} initialParams={{albumName : AlbumName}}  options={{title : "Current Claim"}}/>
+        
       </Tab.Navigator>
     </NavigationContainer>
   );
