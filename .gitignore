@@ -1,0 +1,4 @@
+backend/.venv/*
+backend/.env
+backend/images/*
+backend/base64-images/*
