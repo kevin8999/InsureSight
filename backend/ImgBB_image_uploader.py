@@ -1,5 +1,5 @@
 '''
-Uploads images to an image hosting site
+Uploads images to the ImgBB image hosting site. Saves links to uploaded images to image_links.txt
 '''
 
 from dotenv import load_dotenv, dotenv_values
@@ -79,10 +79,14 @@ def main():
         else:
             print(f"Failed to upload image {i+1}.")
     
-    print(f"images: {img_urls}")
-
     # Remove directory and all its contents
     shutil.rmtree('base64-images')
+
+    print(f"Image Links: {img_urls}")
+    
+    # Write all urls in img_urls to links_file
+    with open('image_links.txt', 'w') as links_file:
+        links_file.write('\n'.join(img_urls))
 
 if __name__ == '__main__':
     main()
