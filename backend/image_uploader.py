@@ -19,7 +19,6 @@ def image_to_base64(image_file):
     return b64_string
 
 def upload_image(API_KEY, b64_file, expiration_time=600):
-    #print(b64_file)
     # Uploads image to the IMGBB service using base64 data. IMGBB requires base64 data when uploading from its API
     url = f"https://api.imgbb.com/1/upload?expiration={expiration_time}"
     
