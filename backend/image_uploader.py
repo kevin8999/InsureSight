@@ -1,8 +1,9 @@
 '''
 Uploads images to an image hosting site
 '''
+
 from dotenv import load_dotenv, dotenv_values
-import os, glob
+import os, glob, shutil
 import base64
 import subprocess
 import json
@@ -35,12 +36,10 @@ def upload_image(API_KEY, b64_file, expiration_time=600):
     # Check the response
     if response.status_code == 200:
         print("Upload successful!")
-        print("Response:", response.json())
         return True, response.json()
     else:
         print("Upload failed!")
         print("Status Code:", response.status_code)
-        print("Response:", response.text)
         return False, response.text
 
 def main():
@@ -48,6 +47,12 @@ def main():
     IMGBB_API_KEY = os.getenv("IMGBB_API_KEY")
 
     image_paths = get_image_paths(file_extension='.jpg')
+
+    # Create folder if it doesn't exist
+    if not os.path.exists('./base64-images'):
+        os.mkdir('base64-images')
+    if not os.path.exists('./images'):
+        os.mkdir('images')
 
     # Convert each image found in ./images to base64 and save in ./base64-images/
     b64_files = []
@@ -60,7 +65,6 @@ def main():
             base64_file.write(b64_str)
 
         b64_files.append(file)
-
     
     img_urls = []
     # Upload to IMGBB hosting service using base64 strings
@@ -76,6 +80,9 @@ def main():
             print(f"Failed to upload image {i+1}.")
     
     print(f"images: {img_urls}")
+
+    # Remove directory and all its contents
+    shutil.rmtree('base64-images')
 
 if __name__ == '__main__':
     main()
